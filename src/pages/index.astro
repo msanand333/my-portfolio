@@ -11,7 +11,7 @@ const projects = await getFeaturedProjects();
 const visibleRoles = experience.filter(e => import.meta.env.PROD ? !e.data.draft : true);
 ---
 
-<Layout title="shanmuganand.m — portfolio">
+<Layout title="Shanmuganand.M | Portfolio">
   
   <!-- HERO -->
   <section id="hero">
@@ -429,7 +429,7 @@ const visibleRoles = experience.filter(e => import.meta.env.PROD ? !e.data.draft
     transition: color 0.2s;
   }
   .contact-link:hover { color: var(--color-primary); text-decoration: none; }
-  .contact-link .lbl { font-size: 11px; letter-spacing: 0.08em; width: 64px; flex-shrink: 0; }
+  .contact-link .lbl { font-size: 11px; letter-spacing: 0.08em; width: 100px; flex-shrink: 0; }
   .contact-link .val { color: var(--color-primary); }
 </style>
 <script>

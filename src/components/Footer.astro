@@ -3,7 +3,11 @@
 
 <footer class="footer">
   <div>$ whoami → <span>shanmuganand.m</span> &nbsp;//&nbsp; status: <span>ONLINE</span> &nbsp;//&nbsp; uptime: <span id="uptime">00:00:00</span></div>
-  <div class="footer-stack">astro · tailwind v4 · cloudflare pages</div>
+  <div class="footer-links">
+    <a href="https://github.com/msanand0" target="_blank" rel="noopener noreferrer">github</a>
+    <a href="https://instagram.com/msanand0" target="_blank" rel="noopener noreferrer">instagram</a>
+    <a href="https://linkedin.com/in/msanand0" target="_blank" rel="noopener noreferrer">linkedin</a>
+  </div>
 </footer>
 
 <style>
@@ -37,9 +41,28 @@
     color: var(--color-blue);
   }
   
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .footer-links a {
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+  
   @media (max-width: 640px) {
-    .footer-stack {
-      display: none; /* hide on very small screens to avoid wrapping mess */
+    .footer-links {
+      display: none;
     }
   }
 </style>

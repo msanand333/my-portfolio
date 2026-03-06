@@ -12,7 +12,9 @@ const navLinks = [
 
 <header class="header">
   <nav class="nav">
-    <a href="/" class="logo">shanmuganand<span>.m</span></a>
+    <a href="/" class="logo" aria-label="shanmuganand.m — home">
+      <img src="/dark-theme-logo.svg" alt="shanmuganand.m logo" id="site-logo" />
+    </a>
 
     <div class="nav-right">
       <div class="nav-links" id="nav-links">
@@ -29,7 +31,7 @@ const navLinks = [
 
       <div class="nav-actions">
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
-          [ dark ]
+          [ light ]
         </button>
         <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
           [menu]
@@ -68,18 +70,21 @@ const navLinks = [
   }
 
   .logo {
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
   }
 
-  .logo span {
-    color: var(--color-blue);
+  .logo img {
+    height: 28px;
+    width: auto;
+    display: block;
   }
 
   .logo:hover {
     text-decoration: none;
+    opacity: 0.85;
   }
 
   .nav-right {
@@ -176,20 +181,26 @@ const navLinks = [
 <script>
   // Theme toggle
   const themeToggle = document.getElementById('theme-toggle');
+  const siteLogo = document.getElementById('site-logo') as HTMLImageElement;
+
   if (themeToggle) {
-    const updateLabel = () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      themeToggle.textContent = current === 'light' ? '[ light ]' : '[ dark ]';
+    const updateThemeUI = (theme: string | null) => {
+      themeToggle.textContent = theme === 'light' ? '[ dark ]' : '[ light ]';
+      if (siteLogo) {
+        siteLogo.src = theme === 'light' ? '/light-theme-logo.svg' : '/dark-theme-logo.svg';
+      }
     };
 
-    updateLabel();
+    // Initial check
+    const current = document.documentElement.getAttribute('data-theme');
+    updateThemeUI(current);
 
     themeToggle.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      updateLabel();
+      updateThemeUI(next);
     });
   }
 

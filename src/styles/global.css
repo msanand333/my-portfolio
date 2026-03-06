@@ -86,7 +86,7 @@ a:hover {
   content: "█";
   animation: blink 1s step-end infinite;
   color: var(--color-cursor);
-  margin-left: 2px;
+  margin-left: 15px;
 }
 
 /* ===== Scanline Overlay ===== */
@@ -186,6 +186,8 @@ a:hover {
 .float {
   animation: float 3s ease-in-out infinite;
 }
+
+/* ===== Theme-aware Logo handled by JS ===== */
 
 /* ===== Reduced Motion ===== */
 @media (prefers-reduced-motion: reduce) {
