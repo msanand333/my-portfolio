@@ -5,11 +5,14 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
-    "preview": "astro preview",
+    "preview": "pnpm run build && wrangler dev",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "pnpm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource/jetbrains-mono": "^5.2.8",
@@ -17,6 +20,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.71.0"
   }
 }
