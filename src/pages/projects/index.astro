@@ -1,0 +1,123 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Card from '../../components/ui/Card.astro';
+import Badge from '../../components/ui/Badge.astro';
+import { getAllProjects } from '../../utils/content';
+
+const projects = await getAllProjects();
+---
+
+<Layout title="Projects | shanmuganand.m" description="A collection of my open-source projects, tools, and side experiments.">
+  <main class="main-content page-transition">
+    <div class="nav-links inline-nav">
+      <a href="/" class="cmd-link">[ ← cd ~ ]</a>
+    </div>
+
+    <Section id="projects-full" title="projects" flag="all">
+      <div class="projects-grid">
+        {projects.map((project, index) => (
+          <Card class="reveal" style={`transition-delay: ${index * 50}ms`}>
+            <div class="card-header">
+              <h2 class="project-name">{project.data.name}</h2>
+              {project.data.featured && <span class="featured-indicator">*</span>}
+            </div>
+            <p class="project-desc">{project.data.description}</p>
+            <div class="project-stack">
+              {project.data.stack.map((tech: string) => <Badge label={tech} />)}
+            </div>
+            <div class="project-links">
+              <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="repo-link">[ src ]</a>
+              {project.data.live && <a href={project.data.live} target="_blank" rel="noopener noreferrer" class="live-link">[ live ]</a>}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  </main>
+</Layout>
+
+<style>
+  .main-content {
+    flex: 1;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+  }
+
+  .inline-nav {
+    margin-bottom: 2rem;
+  }
+
+  .cmd-link {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+  
+  .cmd-link:hover {
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+
+  .page-transition {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .featured-indicator {
+    color: var(--color-blue);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .project-desc {
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    min-height: 4.5rem;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .repo-link, .live-link {
+    color: var(--color-muted);
+  }
+
+  .repo-link:hover, .live-link:hover {
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+</style>

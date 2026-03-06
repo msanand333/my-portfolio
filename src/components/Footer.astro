@@ -1,0 +1,71 @@
+---
+---
+
+<footer class="footer">
+  <div>$ whoami → <span>shanmuganand.m</span> &nbsp;//&nbsp; status: <span>ONLINE</span> &nbsp;//&nbsp; uptime: <span id="uptime">00:00:00</span></div>
+  <div class="footer-stack">astro · tailwind v4 · cloudflare pages</div>
+</footer>
+
+<style>
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-top: 1px solid var(--color-border);
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+    transition: border-color 0.3s;
+    flex-wrap: wrap;
+    gap: 16px;
+    background-color: var(--color-bg);
+  }
+
+  @media (min-width: 768px) {
+    .footer {
+      padding: 16px 60px;
+    }
+  }
+
+  .footer span {
+    color: var(--color-blue);
+  }
+  
+  @media (max-width: 640px) {
+    .footer-stack {
+      display: none; /* hide on very small screens to avoid wrapping mess */
+    }
+  }
+</style>
+
+<script>
+  const uptimeEl = document.getElementById('uptime');
+
+  // Persist session start across page navigations
+  let start = sessionStorage.getItem('session-start');
+  if (!start) {
+    start = String(Date.now());
+    sessionStorage.setItem('session-start', start);
+  }
+
+  const startTime = parseInt(start, 10);
+
+  function updateUptime() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+    const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+    const s = String(elapsed % 60).padStart(2, '0');
+    if (uptimeEl) {
+      uptimeEl.textContent = `${h}:${m}:${s}`;
+    }
+  }
+
+  updateUptime();
+  setInterval(updateUptime, 1000);
+</script>

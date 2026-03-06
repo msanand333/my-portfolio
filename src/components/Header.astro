@@ -1,0 +1,230 @@
+---
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/';
+
+const navLinks = [
+  { label: 'about', href: '/about' },
+  { label: 'experience', href: '/experience' },
+  { label: 'projects', href: '/projects' },
+  { label: 'blog', href: '/blog' },
+];
+---
+
+<header class="header">
+  <nav class="nav">
+    <a href="/" class="logo">shanmuganand<span>.m</span></a>
+
+    <div class="nav-right">
+      <div class="nav-links" id="nav-links">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={['nav-link', { active: pathname.startsWith(`/${link.label}`) && !isHome }]}
+            data-section={link.href.startsWith('#') ? link.href.slice(1) : undefined}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+          [ dark ]
+        </button>
+        <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+          [menu]
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--color-border);
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(10px);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  @media (min-width: 768px) {
+    .nav {
+      padding: 18px 60px;
+    }
+  }
+
+  :global([data-theme="light"]) .nav {
+    background: rgba(245, 245, 245, 0.93);
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--color-primary);
+  }
+
+  .logo span {
+    color: var(--color-blue);
+  }
+
+  .logo:hover {
+    text-decoration: none;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .nav-link.active,
+  .nav-link.scrollspy-active {
+    color: var(--color-blue);
+  }
+
+  .nav-link.active::before,
+  .nav-link.scrollspy-active::before {
+    content: '> ';
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .theme-btn,
+  .menu-btn {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-family: var(--font-family-mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .theme-btn:hover,
+  .menu-btn:hover {
+    border-color: var(--color-blue);
+    color: var(--color-blue);
+  }
+
+  .menu-btn {
+    display: none;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      flex-direction: column;
+      padding: 18px 32px;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+
+    .menu-btn {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    const updateLabel = () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      themeToggle.textContent = current === 'light' ? '[ light ]' : '[ dark ]';
+    };
+
+    updateLabel();
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateLabel();
+    });
+  }
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.textContent = isOpen ? '[close]' : '[menu]';
+    });
+  }
+
+  // Scrollspy (homepage only)
+  const sections = document.querySelectorAll('section[id]');
+  const sectionLinks = document.querySelectorAll('.nav-link[data-section]');
+
+  if (sections.length > 0 && sectionLinks.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('id');
+          const link = document.querySelector(`.nav-link[data-section="${id}"]`);
+          if (link) {
+            if (entry.isIntersecting) {
+              sectionLinks.forEach((l) => l.classList.remove('scrollspy-active'));
+              link.classList.add('scrollspy-active');
+            }
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>

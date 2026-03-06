@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404: Not Found | shanmuganand.m">
+  <main class="main-content">
+    <div class="terminal-error">
+      <div class="error-code">
+        <span class="prompt">shanmuganand.m@server:~$</span> cd <span id="path-display">/unknown</span>
+      </div>
+      <div class="error-message">
+        bash: cd: <span id="path-display-2">/unknown</span>: No such file or directory
+      </div>
+      <div class="error-action">
+        <span class="prompt">shanmuganand.m@server:~$</span> <span class="cursor-blink"></span>
+      </div>
+      <a href="/" class="home-link">[ return to home → ]</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 150px);
+  }
+
+  .terminal-error {
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 2rem;
+    font-family: var(--font-family-mono);
+  }
+
+  .prompt {
+    color: var(--color-muted);
+  }
+
+  .error-code {
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .error-message {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+  }
+
+  .home-link {
+    display: inline-block;
+    margin-top: 3rem;
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+
+  .home-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<script>
+  // Fill in the actual path the user tried to visit
+  const path = window.location.pathname;
+  const els = document.querySelectorAll('#path-display, #path-display-2');
+  els.forEach(el => {
+    el.textContent = path;
+  });
+</script>

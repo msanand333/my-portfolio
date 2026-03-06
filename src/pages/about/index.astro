@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+---
+
+<Layout title="About | shanmuganand.m" description="My background, skills, and approach to software engineering.">
+  <main class="main-content page-transition">
+    <!-- Inline Nav -->
+    <div class="nav-links inline-nav">
+      <a href="/" class="cmd-link">[ ← cd ~ ]</a>
+    </div>
+
+    <Section id="about-full" title="about">
+      <div class="prose">
+        <p>I am a Senior Frontend Engineer with over 5 years of experience building scalable web applications. My journey started with WordPress and jQuery, evolved through React and Next.js, and has arrived at a strong preference for web fundamentals over heavy framework abstractions.</p>
+        
+        <p>Currently, I split my time between modernizing legacy codebases, designing robust component libraries, and integrating LLMs into user-facing products. I believe that good engineering is about making tradeoffs explicit and writing code that is easy to delete.</p>
+
+        <h3>Focus Areas</h3>
+        <ul>
+          <li><strong>Design Systems:</strong> Translating Figma tokens into resilient CSS/Tailwind architectures without relying on third-party UI libraries when possible.</li>
+          <li><strong>Performance:</strong> Achieving perfect Core Web Vitals scores by shipping less JavaScript, lazy-loading resources, and optimizing the critical rendering path.</li>
+          <li><strong>Developer Experience:</strong> Standardizing linting, CI/CD pipelines (GitHub Actions), and local development environments to accelerate team velocity.</li>
+        </ul>
+
+        <h3>Work Authorization</h3>
+        <p>I am a <strong>U.S. Permanent Resident (Green Card holder)</strong> and do not require sponsorship to work in the United States.</p>
+        <h3>Languages</h3>
+        <p>English (Fluent), Tamil (Native)</p>
+        <a href="/resume.pdf" class="btn btn-blue" target="_blank">[ download resume ]</a>
+      </div>
+    </Section>
+  </main>
+</Layout>
+
+<style>
+  .main-content {
+    flex: 1;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+  }
+
+  .inline-nav {
+    margin-bottom: 2rem;
+  }
+
+  .cmd-link {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+  
+  .cmd-link:hover {
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+
+  .page-transition {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Typography overrides for prose */
+  .prose {
+    max-width: 720px;
+    font-size: 0.95rem;
+    color: var(--color-primary);
+  }
+
+  .prose p {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose h3 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+    color: var(--color-accent);
+  }
+
+  .prose ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .prose li {
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  
+  .prose li::before {
+    content: '- ';
+    position: absolute;
+    left: 0;
+    color: var(--color-blue);
+  }
+
+  .prose strong {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+</style>

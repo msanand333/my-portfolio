@@ -1,0 +1,88 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Senior Frontend Engineer — Astro + TypeScript + Tailwind portfolio' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- OG Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+
+    <title>{title}</title>
+
+    <!-- Font -->
+    <style>
+      @import '@fontsource/jetbrains-mono/400.css';
+      @import '@fontsource/jetbrains-mono/500.css';
+      @import '@fontsource/jetbrains-mono/700.css';
+    </style>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+
+    <!-- Theme init — runs before paint to prevent flash -->
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <div class="site-wrapper">
+      <slot />
+    </div>
+    <Footer />
+    <div class="scanline-overlay" aria-hidden="true"></div>
+  </body>
+</html>
+
+<style>
+  .site-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem 80px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<script>
+  // Add an IntersectionObserver for the reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        // Optional: stop observing once revealed
+        // observer.unobserve(entry.target); 
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  });
+
+  document.querySelectorAll('.reveal, .slide-left').forEach(el => {
+    observer.observe(el);
+  });
+</script>

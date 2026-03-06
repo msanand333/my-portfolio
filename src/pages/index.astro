@@ -1,0 +1,449 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/ui/Section.astro';
+import Card from '../components/ui/Card.astro';
+import Badge from '../components/ui/Badge.astro';
+import { getPublishedExperience, getFeaturedProjects } from '../utils/content';
+import { skills } from '../data/skills';
+
+const experience = await getPublishedExperience();
+const projects = await getFeaturedProjects();
+const visibleRoles = experience.filter(e => import.meta.env.PROD ? !e.data.draft : true);
+---
+
+<Layout title="shanmuganand.m — portfolio">
+  
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-wrap">
+      <div class="hero-text">
+        <h1 class="hero-name">
+          <span class="hero-greeting">Hi I'm</span><br/>
+          <span class="hero-typed-name"><span id="typed"></span><span class="cursor-blink"></span></span>
+        </h1>
+        <div class="hero-pre">// Senior Frontend Engineer</div>
+        <p class="hero-subtitle">Building <span>scalable UIs</span>, design systems &amp; developer tooling</p>
+        <div class="hero-meta">
+          <span>Indianapolis, USA</span>
+          <span>U.S. Permanent Resident</span>
+          <span>Open to opportunities</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#experience" class="btn btn-blue">[ view work ]</a>
+
+          <a href="#about" class="btn">[ about me ]</a>
+        </div>
+      </div>
+
+      <div class="hero-avatar">
+        <img src="/avatar.svg" alt="shanmuganand avatar" width="160" height="240" />
+        <div class="avatar-caption">// <span>shanmuganand</span>.avatar</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ABOUT -->
+  <Section id="about" title="about" flag="whoami">
+    <div class="about-bio reveal">
+      <p>Frontend-obsessed engineer with 5+ years shipping scalable UIs, design systems, and developer tooling across B2B SaaS, video platforms, and scheduling products.</p>
+      <p>I care deeply about performance, accessibility, and building systems that scale — not just features that ship.</p>
+    </div>
+
+    <div class="about-grid reveal">
+      <div class="about-card">
+        <div class="about-card-label">// status</div>
+        <div class="about-card-value">Open to Senior / Staff roles</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-label">// location</div>
+        <div class="about-card-value">Indianapolis, USA</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-label">// authorization</div>
+        <div class="about-card-value">U.S. Permanent Resident</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-label">// languages</div>
+        <div class="about-card-value">EN · TA · HI · DE (basic)</div>
+      </div>
+    </div>
+
+    <a href="/about" class="view-all">[ view full about ]</a>
+  </Section>
+
+  <hr class="divider"/>
+
+  <!-- EXPERIENCE -->
+  <Section id="experience" title="experience" flag="history --work">
+    {visibleRoles.map((entry, index) => (
+      <Card class="exp-entry reveal" style={`transition-delay: ${index * 120}ms`}>
+        <div class="exp-header">
+          <div>
+            <div class="exp-company"><span class="prompt">$</span>{entry.data.company}</div>
+            <div class="exp-role">{entry.data.role}</div>
+          </div>
+          <div class="exp-date">{entry.data.startDate} – {entry.data.endDate}</div>
+        </div>
+        <div class="exp-summary">{entry.data.summary}</div>
+      </Card>
+    ))}
+
+    <a href="/experience" class="view-all">[ view all ]</a>
+  </Section>
+
+  <hr class="divider"/>
+
+  <!-- PROJECTS -->
+  <Section id="projects" title="projects" flag="ls ~/github">
+    <div class="projects-grid">
+      {projects.map((project, index) => (
+        <Card class="project-card slide-left" style={`transition-delay: ${index * 100}ms`}>
+          <div class="project-name">{project.data.name}</div>
+          <p class="project-desc">{project.data.description}</p>
+          <div class="project-stack"><strong>Stack:</strong> {project.data.stack.join(' · ')}</div>
+          <div class="project-stats">★ — · 🍴 —</div>
+          <div class="project-links">
+            <a href={project.data.github} class="project-link" target="_blank" rel="noopener noreferrer">[ github ↗ ]</a>
+            {project.data.live && <a href={project.data.live} class="project-link" target="_blank" rel="noopener noreferrer">[ live ↗ ]</a>}
+          </div>
+        </Card>
+      ))}
+    </div>
+
+    <a href="/projects" class="view-all">[ view all projects ]</a>
+  </Section>
+
+  <hr class="divider"/>
+
+  <!-- SKILLS -->
+  <Section id="skills" title="skills" flag="skills --list">
+    {skills.map((category, index) => (
+      <div class="skills-block reveal" style={`transition-delay:${index * 100}ms`}>
+        <div class="skills-cat">{category.category}</div>
+        <div class="skills-tags">
+          {category.items.map((item: string) => (
+            <Badge label={item} />
+          ))}
+        </div>
+      </div>
+    ))}
+  </Section>
+
+  <hr class="divider"/>
+
+  <!-- CONTACT -->
+  <Section id="contact" title="contact" flag="connect --with=\x22shanmuganand\x22">
+    <div class="contact-grid">
+      <div>
+        <div class="status-badge reveal">
+          <span class="status-dot"></span>
+          status: open to opportunities
+        </div>
+        <div class="contact-links reveal" style="transition-delay: 100ms">
+          <a href="mailto:hello@shanmuganand.dev" class="contact-link">
+            <span class="lbl">// email</span>
+            <span class="val">hello@shanmuganand.dev</span>
+          </a>
+          <a href="https://linkedin.com/in/msanand0" class="contact-link" target="_blank" rel="noopener noreferrer">
+            <span class="lbl">// linkedin</span>
+            <span class="val">linkedin ↗</span>
+          </a>
+          <a href="https://github.com/msanand0" class="contact-link" target="_blank" rel="noopener noreferrer">
+            <span class="lbl">// github</span>
+            <span class="val">github ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay: 200ms">
+        <div style="font-size: 11px; color: var(--color-muted); letter-spacing: 0.15em; margin-bottom: 16px;">// no forms. no bots. just direct lines.</div>
+        <p style="color:var(--color-muted);font-size:12px;line-height:1.9">
+          Reach out via email or LinkedIn.<br/>
+          Usually respond within 24 hours.<br/><br/>
+          Open to Senior Frontend, Staff, and<br/>
+          Principal Engineer roles.
+        </p>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  /* ── LAYOUT ───────────────────────────────── */
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    max-width: 900px;
+    margin: 0 auto;
+    transition: border-color 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    hr.divider {
+      margin: 0 32px;
+    }
+  }
+
+  .prompt { color: var(--color-blue); margin-right: 8px; }
+
+  /* ── HERO ─────────────────────────────────── */
+  .hero-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 160px 32px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+  }
+  @media (min-width: 768px) {
+    .hero-wrap {
+      flex-direction: row;
+      min-height: 100vh;
+      padding: 80px 60px 60px;
+    }
+  }
+
+  .hero-text { flex: 1; min-width: 0; }
+
+  .hero-pre {
+    font-size: 12px;
+    color: var(--color-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .hero-name {
+    font-size: clamp(30px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    min-height: 2.2em; /* Adjusted to account for two lines */
+  }
+  
+  .hero-greeting {
+    color: var(--color-primary);
+  }
+  
+  .hero-typed-name {
+    color: var(--color-blue);
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    color: var(--color-muted);
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+  .hero-subtitle span { color: var(--color-blue); }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-bottom: 44px;
+  }
+  .hero-meta span::before { content: '// '; color: var(--color-border); }
+
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .hero-avatar {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-avatar img {
+    image-rendering: pixelated;
+    filter: drop-shadow(0 16px 12px rgba(0,0,0,0.5));
+    animation: float 3s ease-in-out infinite;
+  }
+  [data-theme="light"] .hero-avatar img {
+    filter: drop-shadow(0 16px 12px rgba(0,0,0,0.15));
+  }
+
+  .avatar-caption {
+    font-size: 10px;
+    color: var(--color-muted);
+    letter-spacing: 0.1em;
+  }
+  .avatar-caption span { color: var(--color-blue); }
+
+  /* ── VIEW ALL CTA ─────────────────────────── */
+  .view-all {
+    display: inline-block;
+    margin-top: 36px;
+    font-size: 12px;
+    color: var(--color-blue);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+    width: max-content;
+  }
+  .view-all::after { content: ' →'; }
+  .view-all:hover { border-color: var(--color-blue); text-decoration: none; }
+
+  /* ── ABOUT ────────────────────────────────── */
+  .about-bio {
+    color: var(--color-muted);
+    line-height: 1.9;
+    max-width: 640px;
+    margin-bottom: 32px;
+  }
+  .about-bio p + p { margin-top: 12px; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  @media (min-width: 640px) { .about-grid { grid-template-columns: 1fr 1fr; } }
+
+  .about-card {
+    border: 1px solid var(--color-border);
+    padding: 16px;
+    font-size: 12px;
+    transition: border-color 0.2s;
+  }
+  .about-card:hover { border-color: var(--color-blue); }
+  .about-card-label { color: var(--color-muted); font-size: 11px; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .about-card-value { color: var(--color-primary); }
+
+  /* ── EXPERIENCE ───────────────────────────── */
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .exp-company { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .exp-role { color: var(--color-muted); font-size: 12px; }
+  .exp-date { color: var(--color-muted); font-size: 11px; white-space: nowrap; margin-left: 16px; text-align: right; }
+
+  .exp-summary {
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.8;
+    border-top: 1px solid var(--color-border);
+    padding-top: 14px;
+    margin-top: 0;
+  }
+
+  /* ── PROJECTS ─────────────────────────────── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 768px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .project-name {
+    color: var(--color-blue);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .project-name::before { content: '> '; }
+
+  .project-desc {
+    color: var(--color-muted);
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .project-stack { font-size: 11px; color: var(--color-muted); margin-bottom: 6px; }
+  .project-stack strong { color: var(--color-primary); }
+  .project-stats { font-size: 11px; color: var(--color-muted); margin-bottom: 16px; }
+
+  .project-links { display: flex; gap: 12px; }
+  .project-link {
+    font-size: 11px;
+    color: var(--color-blue);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .project-link:hover { border-color: var(--color-blue); text-decoration: none; }
+
+  /* ── SKILLS ───────────────────────────────── */
+  .skills-block { margin-bottom: 28px; }
+
+  .skills-cat {
+    font-size: 11px;
+    color: var(--color-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .skills-cat::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
+
+  .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* ── CONTACT ──────────────────────────────── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  @media (min-width: 640px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--color-muted);
+    padding: 8px 16px;
+    border: 1px solid var(--color-border);
+    margin-bottom: 28px;
+  }
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--color-blue);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .contact-links { display: flex; flex-direction: column; gap: 14px; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--color-primary); text-decoration: none; }
+  .contact-link .lbl { font-size: 11px; letter-spacing: 0.08em; width: 64px; flex-shrink: 0; }
+  .contact-link .val { color: var(--color-primary); }
+</style>
+<script>
+  // TYPEWRITER EFFECT
+  const text = 'shanmuganand.m';
+  const el = document.getElementById('typed');
+  if (el) {
+    let i = 0;
+    const type = () => { 
+      if (i < text.length) { 
+        el.textContent += text[i++]; 
+        setTimeout(type, 78); 
+      } 
+    };
+    setTimeout(type, 300);
+  }
+</script>

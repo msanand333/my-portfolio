@@ -1,0 +1,60 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  flag?: string;
+  class?: string;
+}
+
+const { id, title, flag, class: className } = Astro.props;
+---
+
+<section id={id} class:list={[className]}>
+  <div class="section-wrap">
+    {flag && <div class="section-label">$ {flag}</div>}
+    <div class="section-heading reveal">
+      <span class="prompt">&gt;_</span> {title}
+    </div>
+    <div class="section-content">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 32px;
+  }
+
+  @media (min-width: 768px) {
+    .section-wrap {
+      padding: 100px 60px;
+    }
+  }
+
+  .section-label {
+    font-size: 11px;
+    color: var(--color-muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .section-heading {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 48px;
+  }
+  
+  .section-heading .prompt {
+    color: var(--color-blue);
+    margin-right: 8px;
+  }
+
+  .section-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+</style>

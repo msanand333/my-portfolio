@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Card from '../../components/ui/Card.astro';
+import { getPublishedPosts } from '../../utils/content';
+
+const posts = await getPublishedPosts();
+---
+
+<Layout title="Blog | shanmuganand.m" description="Writings on frontend engineering, performance, and design systems.">
+  <main class="main-content page-transition">
+    <div class="nav-links inline-nav">
+      <a href="/" class="cmd-link">[ ← cd ~ ]</a>
+    </div>
+
+    <Section id="blog-listing" title="cat posts" flag="sort=date">
+      <div class="blog-grid">
+        {posts.map((post, index) => (
+          <Card class="reveal" style={`transition-delay: ${index * 50}ms`} href={`/blog/${post.id}`}>
+            <div class="post-header">
+              <h2 class="post-title">{post.data.title}</h2>
+            </div>
+            <div class="post-meta">
+              <span class="post-date">{post.data.date}</span>
+            </div>
+            <p class="post-excerpt">{post.data.excerpt}</p>
+            <div class="read-link">
+              [ read → ]
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  </main>
+</Layout>
+
+<style>
+  .main-content {
+    flex: 1;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+  }
+
+  .inline-nav {
+    margin-bottom: 2rem;
+  }
+
+  .cmd-link {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+  
+  .cmd-link:hover {
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+
+  .page-transition {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .blog-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .post-header {
+    margin-bottom: 0.5rem;
+  }
+
+  .post-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    line-height: 1.4;
+  }
+
+  .post-meta {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.95rem;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+  }
+
+  .read-link {
+    font-size: 0.875rem;
+    color: var(--color-blue);
+    text-align: right;
+  }
+  
+  /* Link hover state is handled by Card.astro */
+  :global(.card:hover) .read-link {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,210 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+  });
+  
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} | shanmuganand.m`} description={post.data.excerpt}>
+  <main class="main-content page-transition">
+    <div class="nav-links inline-nav">
+      <a href="/blog" class="cmd-link">[ ← cd ../ ]</a>
+    </div>
+
+    <article class="blog-post reveal">
+      <header class="post-header">
+        <h1 class="post-title">{post.data.title}</h1>
+        <div class="post-meta">
+          <span class="post-date">{post.data.date}</span>
+        </div>
+      </header>
+
+      <div class="mdx-content">
+        <Content />
+      </div>
+    </article>
+
+    <div class="nav-links bottom-nav reveal slide-left">
+      <a href="/blog" class="cmd-link">[ ← back to blog ]</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .main-content {
+    flex: 1;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .inline-nav {
+    margin-bottom: 3rem;
+  }
+  
+  .bottom-nav {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cmd-link {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+  
+  .cmd-link:hover {
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+
+  .page-transition {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Header */
+  .post-header {
+    margin-bottom: 3rem;
+  }
+
+  .post-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .post-meta {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    font-family: var(--font-family-mono);
+  }
+
+  /* MDX Content Styles - Blog Specific */
+  .mdx-content {
+    font-size: 1.05rem;
+    color: var(--color-primary);
+    line-height: 1.7;
+    font-family: var(--font-family-mono);
+  }
+
+  .mdx-content :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .mdx-content :global(h2) {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .mdx-content :global(h3) {
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  .mdx-content :global(a) {
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s ease;
+  }
+  
+  .mdx-content :global(a:hover) {
+    text-decoration-color: var(--color-blue);
+  }
+
+  .mdx-content :global(ul), 
+  .mdx-content :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .mdx-content :global(li) {
+    position: relative;
+  }
+  
+  .mdx-content :global(ul li)::before {
+    content: '- ';
+    position: absolute;
+    left: -1.25rem;
+    color: var(--color-muted);
+  }
+  
+  .mdx-content :global(ul) {
+    list-style: none; /* We use custom bullets above */
+  }
+
+  .mdx-content :global(strong) {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .mdx-content :global(blockquote) {
+    border-left: 2px solid var(--color-blue);
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    color: var(--color-muted);
+    font-style: italic;
+  }
+
+  .mdx-content :global(code) {
+    background-color: var(--color-surface);
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    font-size: 0.9em;
+    border: 1px solid var(--color-border);
+  }
+
+  .mdx-content :global(pre) {
+    background-color: var(--color-surface);
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .mdx-content :global(pre code) {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    font-size: 0.85rem;
+  }
+  
+  .mdx-content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
+</style>
