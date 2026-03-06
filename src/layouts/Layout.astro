@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -32,9 +33,6 @@ const { title, description = 'Senior Frontend Engineer — Astro + TypeScript + 
       @import '@fontsource/jetbrains-mono/500.css';
       @import '@fontsource/jetbrains-mono/700.css';
     </style>
-
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="/src/styles/global.css" />
 
     <!-- Theme init — runs before paint to prevent flash -->
     <script is:inline>
