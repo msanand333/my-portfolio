@@ -1,9 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Section from '../../components/ui/Section.astro';
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
 ---
 
-<Layout title="About | shanmuganand.m" description="My background, skills, and approach to software engineering.">
+<Layout
+  title="About | shanmuganand.m"
+  description="My background, skills, and approach to software engineering."
+>
   <main class="main-content page-transition">
     <!-- Inline Nav -->
     <div class="nav-links inline-nav">
@@ -12,22 +15,81 @@ import Section from '../../components/ui/Section.astro';
 
     <Section id="about-full" title="about">
       <div class="prose">
-        <p>I am a Senior Frontend Engineer with over 5 years of experience building scalable web applications. My journey started with WordPress and jQuery, evolved through React and Next.js, and has arrived at a strong preference for web fundamentals over heavy framework abstractions.</p>
-        
-        <p>Currently, I split my time between modernizing legacy codebases, designing robust component libraries, and integrating LLMs into user-facing products. I believe that good engineering is about making tradeoffs explicit and writing code that is easy to delete.</p>
+        <p>
+          I'm <strong>M.S.Anand</strong>, Senior Frontend Engineer based in
+          Indianapolis. I build things that work — AI-powered features, API
+          integrations, design systems, WebRTC platforms — and I'm currently
+          learning to do a handstand, which honestly has a lot in common with
+          frontend engineering. Looks simple from the outside. Deeply humbling
+          once you actually try it.
+        </p>
+
+        <p>
+          Six years in, I've shipped across the full frontend spectrum — from
+          pixel-perfect component libraries to real-time video platforms to
+          compliance tooling with complex validation engines. I don't specialize
+          in one thing. I specialize in making the whole thing work, fast, and
+          not fall apart at 3am.
+        </p>
+        <p>
+          I still think most teams are overcomplicating their stack. You
+          probably don't need that abstraction. What you need is a clear
+          architecture, a fast feedback loop, and someone who gives a damn about
+          the details from the API contract all the way down to the CSS variable
+          name. That's the part I'm good at.
+        </p>
 
         <h3>Focus Areas</h3>
         <ul>
-          <li><strong>Design Systems:</strong> Translating Figma tokens into resilient CSS/Tailwind architectures without relying on third-party UI libraries when possible.</li>
-          <li><strong>Performance:</strong> Achieving perfect Core Web Vitals scores by shipping less JavaScript, lazy-loading resources, and optimizing the critical rendering path.</li>
-          <li><strong>Developer Experience:</strong> Standardizing linting, CI/CD pipelines (GitHub Actions), and local development environments to accelerate team velocity.</li>
+          <li>
+            <strong>Feature Engineering:</strong> From AI-powered suggestion engines
+            to real-time WebRTC platforms — I've shipped complex, stateful frontend
+            features that talk to APIs, handle edge cases, and actually work in production.
+          </li>
+          <li>
+            <strong>Design Systems:</strong> Not the kind that lives in a Figma file
+            nobody opens. The kind with typed component contracts, documented APIs,
+            and enough flexibility that a junior engineer can use it without breaking
+            everything.
+          </li>
+          <li>
+            <strong>Performance:</strong> Core Web Vitals aren't a checkbox. I've
+            migrated CRA to Vite, cut build times by 80%, and obsessed over the critical
+            rendering path long enough to know exactly where most teams are leaving
+            time on the table.
+          </li>
+          <li>
+            <strong>Developer Experience:</strong> If your CI pipeline takes 20 minutes,
+            your local setup needs a README, and your linting config is held together
+            with hope — I've fixed those too. Fast feedback loops aren't optional,
+            they're how good software gets built.
+          </li>
         </ul>
 
+        <h3>Outside the terminal</h3>
+        <p>
+          Currently training for my first triathlon. Also attempting a
+          freestanding handstand, which is going about as well as most
+          JavaScript rewrites — promising progress, unexpected setbacks, but
+          committed to the outcome.
+        </p>
+
+        <h3>Hot take</h3>
+        <p>
+          AI won't replace good engineers. It'll replace the ones who stopped
+          being curious.
+        </p>
+
         <h3>Work Authorization</h3>
-        <p>I am a <strong>U.S. Permanent Resident (Green Card holder)</strong> and do not require sponsorship to work in the United States.</p>
+        <p>
+          <strong>U.S. Permanent Resident (Green Card holder).</strong> No sponsorship
+          needed. Open to remote — Indianapolis is great but the world is bigger.
+        </p>
         <h3>Languages</h3>
         <p>English (Fluent), Tamil (Native)</p>
-        <a href="/resume.pdf" class="btn btn-blue" target="_blank">[ download resume ]</a>
+        <a href="/resume.pdf" class="btn btn-blue" target="_blank"
+          >[ download resume ]</a
+        >
       </div>
     </Section>
   </main>
@@ -48,7 +110,7 @@ import Section from '../../components/ui/Section.astro';
     font-size: 0.875rem;
     color: var(--color-muted);
   }
-  
+
   .cmd-link:hover {
     color: var(--color-blue);
     text-decoration: none;
@@ -59,8 +121,14 @@ import Section from '../../components/ui/Section.astro';
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* Typography overrides for prose */
@@ -89,14 +157,14 @@ import Section from '../../components/ui/Section.astro';
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .prose li {
     padding-left: 1.5rem;
     position: relative;
   }
-  
+
   .prose li::before {
-    content: '- ';
+    content: "- ";
     position: absolute;
     left: 0;
     color: var(--color-blue);

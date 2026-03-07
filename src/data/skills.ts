@@ -11,6 +11,8 @@ export const skills = [
       "SCSS",
       "Tailwind",
       "Webpack",
+      "Vite",
+      "Redux",
       "Performance Optimization",
       "Accessibility (WCAG)",
     ],

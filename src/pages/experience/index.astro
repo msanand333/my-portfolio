@@ -1,14 +1,17 @@
 ---
-import { render } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import Section from '../../components/ui/Section.astro';
-import Badge from '../../components/ui/Badge.astro';
-import { getPublishedExperience } from '../../utils/content';
+import { render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Badge from "../../components/ui/Badge.astro";
+import { getPublishedExperience } from "../../utils/content";
 
 const experience = await getPublishedExperience();
 ---
 
-<Layout title="Experience | shanmuganand.m" description="My complete work history and professional experience as a software engineer.">
+<Layout
+  title="Experience | shanmuganand.m"
+  description="My complete work history and professional experience as a software engineer."
+>
   <main class="main-content page-transition">
     <div class="nav-links inline-nav">
       <a href="/" class="cmd-link">[ ← cd ~ ]</a>
@@ -17,32 +20,44 @@ const experience = await getPublishedExperience();
     <Section id="experience-full" title="experience" flag="all">
       <div class="timeline">
         <div class="timeline-line"></div>
-        {experience.map(async (entry, index) => {
-          const { Content } = await render(entry);
-          return (
-            <div class="timeline-item reveal" style={`transition-delay: ${index * 100}ms`}>
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h2 class="timeline-role">{entry.data.role}</h2>
-                  <span class="timeline-company">@ {entry.data.company}</span>
-                </div>
-                <div class="timeline-meta">
-                  <span class="timeline-date">{entry.data.startDate} — {entry.data.endDate}</span>
-                  <span class="timeline-location"> | {entry.data.location}</span>
-                </div>
-                
-                <div class="timeline-stack">
-                  {entry.data.stack.map((tech: string) => <Badge label={tech} />)}
-                </div>
+        {
+          experience.map(async (entry, index) => {
+            const { Content } = await render(entry);
+            return (
+              <div
+                class="timeline-item reveal"
+                style={`transition-delay: ${index * 100}ms`}
+              >
+                <div class="timeline-dot" />
+                <div class="timeline-content">
+                  <div class="timeline-header">
+                    <h2 class="timeline-role">{entry.data.role}</h2>
+                    <span class="timeline-company">@ {entry.data.company}</span>
+                  </div>
+                  <div class="timeline-meta">
+                    <span class="timeline-date">
+                      {entry.data.startDate} — {entry.data.endDate}
+                    </span>
+                    <span class="timeline-location">
+                      {" "}
+                      | {entry.data.location}
+                    </span>
+                  </div>
 
-                <div class="mdx-content">
-                  <Content />
+                  <div class="timeline-stack">
+                    {entry.data.stack.map((tech: string) => (
+                      <Badge label={tech} />
+                    ))}
+                  </div>
+
+                  <div class="mdx-content">
+                    <Content />
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        }
       </div>
     </Section>
   </main>
@@ -63,7 +78,7 @@ const experience = await getPublishedExperience();
     font-size: 0.875rem;
     color: var(--color-muted);
   }
-  
+
   .cmd-link:hover {
     color: var(--color-blue);
     text-decoration: none;
@@ -74,8 +89,14 @@ const experience = await getPublishedExperience();
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* Timeline (Full variant) */
@@ -89,10 +110,10 @@ const experience = await getPublishedExperience();
 
   .timeline-line {
     position: absolute;
-    top: 0;
+    top: 7px;
     bottom: 0;
-    left: 7px;
-    width: 1px;
+    left: 6px;
+    width: 2px;
     background-color: var(--color-border);
   }
 
@@ -156,15 +177,15 @@ const experience = await getPublishedExperience();
     flex-direction: column;
     gap: 0.75rem;
   }
-  
+
   .mdx-content :global(li) {
     padding-left: 1.5rem;
     position: relative;
     line-height: 1.6;
   }
-  
+
   .mdx-content :global(li)::before {
-    content: '- ';
+    content: "- ";
     position: absolute;
     left: 0;
     color: var(--color-muted);
@@ -172,14 +193,13 @@ const experience = await getPublishedExperience();
 
   @media (max-width: 768px) {
     .timeline-dot {
-      left: -1.75rem;
       width: 11px;
       height: 11px;
       top: 8px;
     }
-    
+
     .timeline-line {
-      left: 5px;
+      left: 4px;
     }
   }
 </style>
