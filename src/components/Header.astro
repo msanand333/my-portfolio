@@ -1,39 +1,57 @@
 ---
 const pathname = Astro.url.pathname;
-const isHome = pathname === '/';
+const isHome = pathname === "/";
 
 const navLinks = [
-  { label: 'about', href: '/about' },
-  { label: 'experience', href: '/experience' },
-  { label: 'projects', href: '/projects' },
-  { label: 'blog', href: '/blog' },
+  { label: "about", href: "/about" },
+  { label: "experience", href: "/experience" },
+  { label: "projects", href: "/projects" },
+  { label: "blog", href: "/blog" },
 ];
 ---
 
 <header class="header">
   <nav class="nav">
     <a href="/" class="logo" aria-label="shanmuganand.m — home">
-      <img src="/dark-theme-logo.svg" alt="shanmuganand.m logo" id="site-logo" />
+      <img
+        src="/dark-theme-logo.svg"
+        alt="shanmuganand.m logo"
+        id="site-logo"
+        width="180"
+        height="48"
+      />
     </a>
 
     <div class="nav-right">
       <div class="nav-links" id="nav-links">
-        {navLinks.map((link) => (
-          <a
-            href={link.href}
-            class:list={['nav-link', { active: pathname.startsWith(`/${link.label}`) && !isHome }]}
-            data-section={link.href.startsWith('#') ? link.href.slice(1) : undefined}
-          >
-            {link.label}
-          </a>
-        ))}
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "nav-link",
+                { active: pathname.startsWith(`/${link.label}`) && !isHome },
+              ]}
+              data-section={
+                link.href.startsWith("#") ? link.href.slice(1) : undefined
+              }
+            >
+              {link.label}
+            </a>
+          ))
+        }
       </div>
 
       <div class="nav-actions">
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
           [ light ]
         </button>
-        <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+        <button
+          id="menu-toggle"
+          class="menu-btn"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
           [menu]
         </button>
       </div>
@@ -56,7 +74,9 @@ const navLinks = [
     border-bottom: 1px solid var(--color-border);
     background: rgba(10, 10, 10, 0.92);
     backdrop-filter: blur(10px);
-    transition: background 0.3s, border-color 0.3s;
+    transition:
+      background 0.3s,
+      border-color 0.3s;
   }
 
   @media (min-width: 768px) {
@@ -120,7 +140,7 @@ const navLinks = [
 
   .nav-link.active::before,
   .nav-link.scrollspy-active::before {
-    content: '> ';
+    content: "> ";
   }
 
   .nav-actions {
@@ -139,7 +159,9 @@ const navLinks = [
     padding: 5px 12px;
     cursor: pointer;
     letter-spacing: 0.08em;
-    transition: border-color 0.2s, color 0.2s;
+    transition:
+      border-color 0.2s,
+      color 0.2s;
   }
 
   .theme-btn:hover,
@@ -180,60 +202,65 @@ const navLinks = [
 
 <script>
   // Theme toggle
-  const themeToggle = document.getElementById('theme-toggle');
-  const siteLogo = document.getElementById('site-logo') as HTMLImageElement;
+  const themeToggle = document.getElementById("theme-toggle");
+  const siteLogo = document.getElementById("site-logo") as HTMLImageElement;
 
   if (themeToggle) {
     const updateThemeUI = (theme: string | null) => {
-      themeToggle.textContent = theme === 'light' ? '[ dark ]' : '[ light ]';
+      themeToggle.textContent = theme === "light" ? "[ dark ]" : "[ light ]";
       if (siteLogo) {
-        siteLogo.src = theme === 'light' ? '/light-theme-logo.svg' : '/dark-theme-logo.svg';
+        siteLogo.src =
+          theme === "light" ? "/light-theme-logo.svg" : "/dark-theme-logo.svg";
       }
     };
 
     // Initial check
-    const current = document.documentElement.getAttribute('data-theme');
+    const current = document.documentElement.getAttribute("data-theme");
     updateThemeUI(current);
 
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+    themeToggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
       updateThemeUI(next);
     });
   }
 
   // Mobile menu toggle
-  const menuToggle = document.getElementById('menu-toggle');
-  const navLinks = document.getElementById('nav-links');
+  const menuToggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
   if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-      menuToggle.textContent = isOpen ? '[close]' : '[menu]';
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "[close]" : "[menu]";
     });
   }
 
   // Scrollspy (homepage only)
-  const sections = document.querySelectorAll('section[id]');
-  const sectionLinks = document.querySelectorAll('.nav-link[data-section]');
+  const sections = document.querySelectorAll("section[id]");
+  const sectionLinks = document.querySelectorAll(".nav-link[data-section]");
 
   if (sections.length > 0 && sectionLinks.length > 0) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const id = entry.target.getAttribute('id');
-          const link = document.querySelector(`.nav-link[data-section="${id}"]`);
+          const id = entry.target.getAttribute("id");
+          const link = document.querySelector(
+            `.nav-link[data-section="${id}"]`,
+          );
           if (link) {
             if (entry.isIntersecting) {
-              sectionLinks.forEach((l) => l.classList.remove('scrollspy-active'));
-              link.classList.add('scrollspy-active');
+              sectionLinks.forEach((l) =>
+                l.classList.remove("scrollspy-active"),
+              );
+              link.classList.add("scrollspy-active");
             }
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     sections.forEach((section) => observer.observe(section));

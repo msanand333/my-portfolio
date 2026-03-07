@@ -1,14 +1,21 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import '../styles/global.css';
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "@fontsource/jetbrains-mono/700.css";
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'Senior Frontend Engineer — Astro + TypeScript + Tailwind portfolio' } = Astro.props;
+const {
+  title,
+  description = "Senior Frontend Engineer — Compiling ideas into interfaces since 2018_",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -27,19 +34,12 @@ const { title, description = 'Senior Frontend Engineer — Astro + TypeScript + 
 
     <title>{title}</title>
 
-    <!-- Font -->
-    <style>
-      @import '@fontsource/jetbrains-mono/400.css';
-      @import '@fontsource/jetbrains-mono/500.css';
-      @import '@fontsource/jetbrains-mono/700.css';
-    </style>
-
     <!-- Theme init — runs before paint to prevent flash -->
     <script is:inline>
       (function () {
-        const saved = localStorage.getItem('theme');
+        const saved = localStorage.getItem("theme");
         if (saved) {
-          document.documentElement.setAttribute('data-theme', saved);
+          document.documentElement.setAttribute("data-theme", saved);
         }
       })();
     </script>
@@ -67,20 +67,23 @@ const { title, description = 'Senior Frontend Engineer — Astro + TypeScript + 
 
 <script>
   // Add an IntersectionObserver for the reveal animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        // Optional: stop observing once revealed
-        // observer.unobserve(entry.target); 
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          // Optional: stop observing once revealed
+          // observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    },
+  );
 
-  document.querySelectorAll('.reveal, .slide-left').forEach(el => {
+  document.querySelectorAll(".reveal, .slide-left").forEach((el) => {
     observer.observe(el);
   });
 </script>
