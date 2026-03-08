@@ -4,9 +4,21 @@ date: "2025-03-05"
 excerpt: How I built a terminal-inspired portfolio from scratch using Astro 5, Vanilla CSS, and vanilla TypeScript — no frameworks, no bloat.
 ---
 
-## Why a CLI Theme?
+I relocated to the US last year. My previous company couldn't facilitate it, so I found myself in a new country, starting a job search from scratch, with nothing but a resume and a LinkedIn profile. And pretty quickly I realised that wasn't going to be enough. Every application wanted a portfolio link — proof that you can think, communicate, and build something that reflects how you actually work. So I built one.
 
-Most developer portfolios look the same — a hero section, some cards, a contact form. I wanted something that felt like _me_: a terminal.
+Most developer portfolios look the same. Hero section. Cards. A contact form nobody fills out. A "Download Resume" button that links to a Google Doc. You've seen it. I've seen it. Everyone has seen it — and forgotten it immediately.
+
+I wanted mine to feel like _me_. I live in terminals. I think in systems. So I built a portfolio that looks like one.
+
+Here's every decision I made, and more importantly, _why_.
+
+---
+
+## Where this is going?
+
+This site isn't just a portfolio. It's a running log of how I think. I plan to write about the unemployment phase — what it actually feels like, what I learned, what I'd do differently. About training for a triathlon while job hunting. About frontend opinions I hold too strongly. The posts won't always be technical. Sometimes they'll just be honest.
+
+---
 
 ## The Stack
 
@@ -14,8 +26,74 @@ Most developer portfolios look the same — a hero section, some cards, a contac
 - **Vanilla CSS** — CSS-native tokens
 - **Vanilla TypeScript** — No React, no framework overhead
 
-## What I Learned
+---
 
-Building without a UI framework forces you to understand the fundamentals. Every animation is CSS. Every interaction is vanilla JS. The result? A Lighthouse score of 100.
+## Why Astro?
 
-_More posts coming soon..._
+I've shipped React apps, Next.js apps, and a fair amount of Webpack configs I'd like to forget. For a portfolio — a site that is mostly static content — none of that made sense.
+
+Astro's pitch is simple: **ship zero JavaScript by default**. No React runtime. No hydration overhead. Pages are pre-rendered at build time and served as static HTML. For a site where the most interactive thing is a theme toggle and a typewriter effect, that's exactly right.
+
+The feature that sold me was **Content Collections**. Instead of hardcoding experience and project data in components, you define a schema with Zod and write content in MDX files. Astro validates your frontmatter at build time — if you typo a field or use the wrong type, the build fails with a clear error before anything reaches production.
+
+```ts
+// src/content/config.ts
+const experience = defineCollection({
+  schema: z.object({
+    company: z.string(),
+    role: z.string(),
+    startDate: z.string(),
+    endDate: z.string(),
+    summary: z.string(),
+    stack: z.array(z.string()),
+    order: z.number(),
+    draft: z.boolean().default(false),
+  }),
+});
+```
+
+This means content is separated from presentation. Adding a new job is editing an MDX file, not touching a component. Future me will thank present me for this.
+
+I should mention — I didn't figure all of this out alone. My friend **Sangeeth** built his portfolio on the exact same stack before I did and was generous enough to share how it all fit together. If you want to see a more polished implementation of Astro + Tailwind v4 + Cloudflare Pages, go look at his [site](https://sangeethsivan.me).
+
+---
+
+## Why a CLI Theme?
+
+The terminal theme isn't just visual decoration. Every decision reinforces the metaphor:
+
+**Monospace everywhere.** JetBrains Mono, self-hosted via `@fontsource`. No Google Fonts request, no flash of unstyled text, no layout shift. Everything inherits monospace by default — headings, body, inputs, everything.
+
+**`#2b7fff` is the only color.** The entire site is monochrome except for one blue. It's used for CTAs, active nav items, prompt prefixes, and interactive states. Restraint makes it hit harder.
+
+**Section labels use command syntax.** `$ whoami`, `$ history --work`, `$ ls ~/github`. These aren't just cute — they establish a consistent grammar across the site. You always know where you are.
+
+**The footer is a terminal status bar:**
+
+```
+$ whoami → shanmuganand.m  //  status: ONLINE  //  uptime: 00:04:32
+```
+
+The uptime counter ticks every second via `setInterval`, stole this from a cool portfolio of my friend. Small detail. People notice.
+
+**Scanline overlay.** A subtle `repeating-linear-gradient` fixed to the viewport gives the whole site a slight CRT texture. Zero performance cost. Pure CSS.
+
+---
+
+## Deployment on Cloudflare Pages
+
+Push to `main`. Cloudflare detects the commit, runs `npm run build`, deploys `dist/` to its edge network, invalidates cache. The site is live globally in under a minute.
+
+Every branch gets a preview URL automatically. Before merging any change, I can share a live link and review it on a real device. This is table stakes for professional projects and it's free.
+
+The domain is registered on Namespace, pointed to Cloudflare via nameservers — so DNS, SSL, caching, and analytics are all handled by Cloudflare from there. No third-party analytics script. No tracking pixels. Cloudflare Web Analytics adds zero JavaScript to the page.
+
+## The Result
+
+A portfolio that loads instantly, scores 100 on Lighthouse, and actually reflects how I think about frontend — systems over features, fundamentals over frameworks, craft over convenience.
+
+The hardest part wasn't the technology. It was sitting down and doing it.
+
+If you're thinking about building yours — just start. Pick Astro. Commit to a constraint. Ship something. You can always improve it later.
+
+Thanks for reading. More posts coming soon.
