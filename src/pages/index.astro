@@ -48,7 +48,6 @@ const visibleRoles = experience.filter((e) =>
           width="160"
           height="240"
         />
-        <!-- <div class="avatar-caption">// <span>shanmuganand</span>.avatar</div> -->
       </div>
     </div>
   </section>
@@ -224,16 +223,13 @@ const visibleRoles = experience.filter((e) =>
       </div>
 
       <div class="reveal" style="transition-delay: 200ms">
-        <div
-          style="font-size: 11px; color: var(--color-muted); letter-spacing: 0.15em; margin-bottom: 16px;"
-        >
+        <div class="contact-info-label">
           // no forms. no bots. just direct lines.
         </div>
-        <p style="color:var(--color-muted);font-size:12px;line-height:1.9">
+        <p class="contact-info-text">
           Reach out via email or LinkedIn.<br />
-          Usually respond within 24 hours.<br /><br />
-          Open to Senior Frontend, Staff, and<br />
-          Principal Engineer roles.
+          Usually respond within 24 hours.<br />
+          Open to Senior Frontend &amp; Staff Engineer roles.
         </p>
       </div>
     </div>
@@ -285,7 +281,7 @@ const visibleRoles = experience.filter((e) =>
   }
 
   .hero-pre {
-    font-size: 12px;
+    font-size: 18px;
     color: var(--color-muted);
     letter-spacing: 0.1em;
     margin-bottom: 16px;
@@ -309,7 +305,7 @@ const visibleRoles = experience.filter((e) =>
   }
 
   .hero-subtitle {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--color-muted);
     font-weight: 300;
     margin-bottom: 28px;
@@ -408,7 +404,7 @@ const visibleRoles = experience.filter((e) =>
   .about-card {
     border: 1px solid var(--color-border);
     padding: 16px;
-    font-size: 12px;
+    font-size: 14px;
     transition: border-color 0.2s;
   }
   .about-card:hover {
@@ -416,7 +412,7 @@ const visibleRoles = experience.filter((e) =>
   }
   .about-card-label {
     color: var(--color-muted);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.1em;
     margin-bottom: 4px;
   }
@@ -473,7 +469,7 @@ const visibleRoles = experience.filter((e) =>
   .project-name {
     color: var(--color-blue);
     font-weight: 700;
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 10px;
   }
   .project-name::before {
@@ -482,7 +478,7 @@ const visibleRoles = experience.filter((e) =>
 
   .project-desc {
     color: var(--color-muted);
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.7;
     margin-bottom: 14px;
   }
@@ -551,6 +547,17 @@ const visibleRoles = experience.filter((e) =>
     grid-template-columns: 1fr;
     gap: 48px;
   }
+  .contact-grid .contact-info-label {
+    font-size: 12px;
+    color: var(--color-muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+  .contact-grid .contact-info-text {
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.9;
+  }
   @media (min-width: 640px) {
     .contact-grid {
       grid-template-columns: 1fr 1fr;
@@ -561,15 +568,15 @@ const visibleRoles = experience.filter((e) =>
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-muted);
     padding: 8px 16px;
     border: 1px solid var(--color-border);
     margin-bottom: 28px;
   }
   .status-dot {
-    width: 6px;
-    height: 6px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--color-blue);
     animation: pulse 2s ease-in-out infinite;
@@ -603,7 +610,7 @@ const visibleRoles = experience.filter((e) =>
     text-decoration: none;
   }
   .contact-link .lbl {
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.08em;
     width: 100px;
     flex-shrink: 0;

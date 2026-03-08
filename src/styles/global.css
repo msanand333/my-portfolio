@@ -87,6 +87,8 @@ a:hover {
   animation: blink 1s step-end infinite;
   color: var(--color-cursor);
   margin-left: 15px;
+  position: relative;
+  bottom: 5px;
 }
 
 /* ===== Scanline Overlay ===== */
@@ -221,5 +223,5 @@ a:hover {
 .section-divider {
   border: none;
   border-top: 1px solid var(--color-border);
-  margin: 4rem 0;
+  margin: 64px 0;
 }

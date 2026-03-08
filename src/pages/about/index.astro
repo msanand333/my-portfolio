@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Section from "../../components/ui/Section.astro";
+import Badge from "../../components/ui/Badge.astro";
 ---
 
 <Layout
@@ -40,31 +41,11 @@ import Section from "../../components/ui/Section.astro";
         </p>
 
         <h3>Focus Areas</h3>
-        <ul>
-          <li>
-            <strong>Feature Engineering:</strong> From AI-powered suggestion engines
-            to real-time WebRTC platforms — I've shipped complex, stateful frontend
-            features that talk to APIs, handle edge cases, and actually work in production.
-          </li>
-          <li>
-            <strong>Design Systems:</strong> Not the kind that lives in a Figma file
-            nobody opens. The kind with typed component contracts, documented APIs,
-            and enough flexibility that a junior engineer can use it without breaking
-            everything.
-          </li>
-          <li>
-            <strong>Performance:</strong> Core Web Vitals aren't a checkbox. I've
-            migrated CRA to Vite, cut build times by 80%, and obsessed over the critical
-            rendering path long enough to know exactly where most teams are leaving
-            time on the table.
-          </li>
-          <li>
-            <strong>Developer Experience:</strong> If your CI pipeline takes 20 minutes,
-            your local setup needs a README, and your linting config is held together
-            with hope — I've fixed those too. Fast feedback loops aren't optional,
-            they're how good software gets built.
-          </li>
-        </ul>
+        <Badge label="User Interface" />
+        <Badge label="API Integrations" />
+        <Badge label="Design Systems" />
+        <Badge label="Performance" />
+        <Badge label="Developer Experience" />
 
         <h3>Outside the terminal</h3>
         <p>
@@ -98,16 +79,16 @@ import Section from "../../components/ui/Section.astro";
 <style>
   .main-content {
     flex: 1;
-    padding-top: 8rem;
-    padding-bottom: 4rem;
+    padding-top: 128px;
+    padding-bottom: 64px;
   }
 
   .inline-nav {
-    margin-bottom: 2rem;
+    margin-bottom: 32px;
   }
 
   .cmd-link {
-    font-size: 0.875rem;
+    font-size: 14px;
     color: var(--color-muted);
   }
 
@@ -134,32 +115,32 @@ import Section from "../../components/ui/Section.astro";
   /* Typography overrides for prose */
   .prose {
     max-width: 720px;
-    font-size: 0.95rem;
+    font-size: 15px;
     color: var(--color-primary);
   }
 
   .prose p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
   }
 
   .prose h3 {
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    font-size: 1.125rem;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    font-size: 18px;
     color: var(--color-accent);
   }
 
   .prose ul {
     list-style-type: none;
     padding: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
   }
 
   .prose li {
-    padding-left: 1.5rem;
+    padding-left: 24px;
     position: relative;
   }
 
